@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vue.js入门实例一</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <p>{{message}}</p>
+    <input v-model="message">
+</div>
+
+<script type="text/javascript">
+
+    var demo = new Vue({
+        el: '#demo',
+        data: {
+            message: 'Hello Vue.js!'
+        }
+    })
+</script>
+</body>
+</html>
