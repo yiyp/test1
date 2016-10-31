@@ -1,4 +1,4 @@
-package com.org3.excise4;
+package com.org3.excise4.collection;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,11 +10,11 @@ import java.util.Set;
 public class Student {
     public String id;
     public String name;
-    public Set courses;
+    public Set<Course> courses;
 
     public Student(String id, String name) {
         this.id = id;
         this.name = name;
-        this.courses = new HashSet();
+        this.courses = new HashSet<Course>();
     }
 }
