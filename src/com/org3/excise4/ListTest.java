@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class ListTest {
 
-    public List coursersToSelect;
+    public List coursesToSelect;
 
     public ListTest() {
-        this.coursersToSelect = new ArrayList();
+        this.coursesToSelect = new ArrayList();
     }
 }
