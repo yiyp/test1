@@ -98,7 +98,6 @@ public class TestMap {
         }
     }
 
-
     /**
      * 修改
      */
@@ -123,13 +122,38 @@ public class TestMap {
         }
     }
 
+    /**
+     * 测试Map中，是否包含某个Key值或某个Value值
+     */
+    public void testContainsKeyOrValue() {
+        // 根据ID查询
+        System.out.println("请输入学生ID：" );
+        Scanner input = new Scanner(System.in);
+        String id = input.next();
+
+        System.out.println("您输入的学生ID为：" + id + "，在学生映射表中是否存在：" + students.containsKey(id));
+        if (students.containsKey(id)) {
+            System.out.println("对应的学生为：" + students.get(id).name);
+        }
+
+        // 更加学生姓名查询
+        System.out.println("请输入学生姓名：" );
+        String name = input.next();
+        if (students.containsValue(new Student(null, name))) {
+            System.out.println("在学生映射表中确实存在学生：" +name );
+        } else {
+            System.out.println("在学生映射表中不存在该学生！" );
+        }
+    }
+
     public static void main(String[] args) {
         TestMap tm = new TestMap();
         tm.testPut();
         tm.testKeySet();
         // tm.testRemove();
         // tm.testEntrySet();
-        tm.testModify();
-        tm.testEntrySet();
+        // tm.testModify();
+        // tm.testEntrySet();
+        tm.testContainsKeyOrValue();
     }
 }

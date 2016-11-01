@@ -77,6 +77,10 @@ public class TestSet {
         System.out.println("新创建课程：" + course2.name);
         System.out.println("备选课程中是否包含课程：" + course2.name + "，" + coursesToSelect.contains(course2));
 
+        if (coursesToSelect.contains(course2)) {
+            System.out.println("课程：" + course2.name + "的索引位置为："
+                    + coursesToSelect.indexOf(course2));
+        }
     }
 
     /**
@@ -130,7 +134,7 @@ public class TestSet {
 
     public static void main(String[] args) {
         /*
-        TestSet st = new TestSet();
+        TestSet ts = new TestSet();
         st.testAdd();
         st.testForEach();
 
@@ -166,15 +170,16 @@ public class TestSet {
 
         st.testForEachForSet(student);*/
 
-        /*TestSet st = new TestSet();
-        st.testAdd();
-        st.testListContains();*/
+        TestSet ts = new TestSet();
+        ts.testAdd();
+        ts.testListContains();
+        ts.testForEach();
 
-        TestSet st = new TestSet();
-        st.testAdd();
-        st.testForEach();
-        st.createStudentAndSelectCours();
-        st.testSetContains();
+        /*TestSet ts = new TestSet();
+        ts.testAdd();
+        ts.testForEach();
+        ts.createStudentAndSelectCours();
+        ts.testSetContains();*/
 
     }
 }
