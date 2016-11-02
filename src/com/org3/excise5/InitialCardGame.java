@@ -8,12 +8,14 @@ import java.util.*;
  */
 public class InitialCardGame {
     /**
-     * 用于存放备选牌的List
+     * 用于存放一副备选牌的List
      */
     public List<Card> cardToSelect;
+    public  List<Player> playerList;
 
     public InitialCardGame() {
         this.cardToSelect = new ArrayList<Card>();
+        this.playerList = new ArrayList<Player>();
     }
 
     /**
@@ -22,38 +24,41 @@ public class InitialCardGame {
      */
     public void createCard() {
         System.out.println("--------------------开始创建扑克牌------------------------");
-        int id = 0;
         String name = "";
-        String type = "";
+        String typeText = "";
+        int type = 0;
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
-                    type = "黑桃";
+                    typeText = "方片";
+                    type = 0;
                     break;
                 case 1:
-                    type = "红心";
+                    typeText = "梅花";
+                    type = 1;
                     break;
                 case 2:
-                    type = "梅花";
+                    typeText = "红心";
+                    type = 2;
                     break;
                 case 3:
-                    type = "方片";
+                    typeText = "黑桃";
+                    type = 3;
                     break;
             }
             for (int j = 0; j < 13; j++) {
                 if (j == 9) {
-                    name = type + "J";
+                    name = typeText + "J";
                 } else if (j == 10) {
-                    name = type + "Q";
+                    name = typeText + "Q";
                 } else if (j == 11) {
-                    name = type + "K";
+                    name = typeText + "K";
                 } else if (j == 12) {
-                    name = type + "A";
+                    name = typeText + "A";
                 } else {
-                    name = type + (j + 2);
+                    name = typeText + (j + 2);
                 }
-                id++;
-                cardToSelect.add(new Card(id, name));
+                cardToSelect.add(new Card(j, name, type));
             }
         }
         System.out.println("--------------------扑克牌创建成功！------------------------");
@@ -61,20 +66,10 @@ public class InitialCardGame {
     }
 
     /**
-     * 游戏
+     * 创建两位玩家
      */
-    public void playCardGame() {
-
-    }
-
-    public static void main(String[] args) {
-
-        // 创建一副牌
-        InitialCardGame icg = new InitialCardGame();
-        icg.createCard();
-
+    public void createPlayer() {
         // 创建2位玩家
-        List<Player> playerList = new ArrayList<Player>();
         Scanner input = new Scanner(System.in);
         for (int i = 0; i < 2; i++) {
             System.out.println("请输入第" + (i + 1) + "位玩家的ID和姓名:" + "\n" + "输入ID");
@@ -86,21 +81,70 @@ public class InitialCardGame {
         }
         System.out.println("欢迎玩家：" + playerList.get(0).name);
         System.out.println("欢迎玩家：" + playerList.get(1).name);
+    }
+
+    /**
+     * 发牌
+     */
+    public void giveOutCard() {
+        System.out.println("--------------------开始发牌！------------------------");
+        for (int j = 0; j < 2; j++) {
+            System.out.println("玩家：" + playerList.get(0).name + "-拿牌");
+            System.out.println("玩家：" + playerList.get(1).name + "-拿牌");
+            playerList.get(0).cards.add(cardToSelect.get(2 * j));
+            playerList.get(1).cards.add(cardToSelect.get(2 * j + 1));
+        }
+        System.out.println("比赛前玩家各自的手牌为：\n" + playerList.get(0).name + "：" + playerList.get(0).cards
+                         + "\n" + playerList.get(1).name + "：" + playerList.get(1).cards);
+        System.out.println("--------------------发牌结束！------------------------" + "\n"
+                + "--------------------开始游戏！------------------------");
+    }
+
+    /**
+     * 开始游戏
+     */
+    public void playGame() {
+        Collections.sort(playerList.get(0).cards);
+        Collections.sort(playerList.get(1).cards);
+        System.out.println("玩家：" + playerList.get(0).name + "最大的手牌为：" + playerList.get(0).cards.get(1));
+        System.out.println("玩家：" + playerList.get(1).name + "最大的手牌为：" + playerList.get(1).cards.get(1));
+        List<Card> cardMax = new ArrayList<Card>();
+        cardMax.add(playerList.get(0).cards.get(1));
+        cardMax.add(playerList.get(1).cards.get(1));
+        Collections.sort(cardMax);
+
+        if(playerList.get(0).cards.contains(cardMax.get(cardMax.size()-1))) {
+            System.out.println("--------------------玩家：" + playerList.get(0).name + "获胜！------------------------");
+        } else {
+            System.out.println("--------------------玩家：" + playerList.get(1).name + "获胜！------------------------");
+        }
+
+        System.out.println("比赛后玩家各自的手牌为：\n" + playerList.get(0).name + "：" + playerList.get(0).cards
+                + "\n" + playerList.get(1).name + "：" + playerList.get(1).cards);
+    }
+
+    /**
+     * 简易棋牌游戏实现
+     * @param args
+     */
+    public static void main(String[] args) {
+
+        InitialCardGame icg = new InitialCardGame();
+
+        // 创建一副牌
+        icg.createCard();
+
+        // 创建两位玩家
+        icg.createPlayer();
 
         // 洗牌
-       /* List<Card> cardList = new ArrayList<Card>();
-        for (Card cr : cardToSelect) {
-            System.out.println("课程："+ cr.id + "." + cr.name );
-        }*/
-        Collections.shuffle(icg.cardToSelect, new Random(13));
-        System.out.println("洗牌成功！：" + icg.cardToSelect);
-
+        Collections.shuffle(icg.cardToSelect);
+        // System.out.println("洗牌成功！：" + icg.cardToSelect);
 
         // 发牌
-        // icg.sendOutCard();
+        icg.giveOutCard();
 
         // 开始游戏
-        // icg.playCardGame();
-
+        icg.playGame();
     }
 }
